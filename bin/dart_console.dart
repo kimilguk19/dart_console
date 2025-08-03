@@ -7,7 +7,60 @@ void main(List<String> arguments) {
  * 변수와 함수 및 클래스를 사용하는 앱
  * 제작자 : 학생명
  */
-void main() { // 콘솔 앱 실행 진입점
+class Student extends Member {
+  String studentNo; //학번
+  // Student 클래스의 생성자를 명명된 매개변수를 사용하도록 수정하고
+  // 'studentNo'와 부모 클래스인 'Member'의 필수 매개변수를 받도록 합니다.
+  Student({
+    //생성자 생성시 {key=변수명=속성=property}을 사용하기 때문에 *생성자 호출시 네임드 파라미터key:val를 사용한다.=중요{플러터의 코딩 패턴]
+    required this.studentNo,
+    required String id,
+    required String name,
+    required int age,
+    String? etc,
+  }) : super(id: id, name: name, age: age, etc: etc); //생성자 호출시 네임드 파라미터를 사용한다.
+
+  // Student 객체의 읽기 쉬운 문자열 표현을 제공하기 위해 toString 메서드를 오버라이드합니다.
+  @override
+  String toString() {
+    return 'Student(studentNo: $studentNo, id: $id, name: $name, age: $age, etc: ${etc ?? 'N/A'})';
+  }
+}
+
+class Member extends Object {
+  String id;
+  String name;
+  int age;
+  String? etc; // 'etc' 필드는 초기값 없이 데이터를 저장하기 위해 nullable로 변경됨.(nullSafe 기호)
+  // 여기서 *제미나이로 Member 클래스의 생성자를 만들어줘.
+  // 생성자 메서드는 객체가 생성될 때 자동으로 호출되는 메서드이다.
+  Member({required this.id, required this.name, required this.age, this.etc});
+  // 실무에서는 Json데이터를 주고 받기 때문에 Map{} 형태로 데이터를 변경한다.
+  //*제미나이로 Member 클래스에서 toString 메서드를 만들어줘.
+  // toString 메서드는 객체의 문자열 표현을 반환하는 메서드이다.
+  @override
+  String toString() {
+    return 'Member(id: $id, name: $name, age: $age, etc: ${etc ?? 'N/A'})'; //??은 null병합연산자이고, 널 일때 값지정
+  }
+}
+
+void main() {
+  // 콘솔 앱 실행 진입점
+  // Member 클래스의 생성자는 명명된 매개변수를 사용하므로,
+  // 값을 직접 맵 리터럴로 전달하는 대신 명명된 인수로 전달해야 합니다.
+  //*생성자 호출시 네임드 파라미터를 사용한다.=중요{플러터의 코딩 패턴]
+  Member mem2 = Member(id: 'kim2', name: '김이국', age: 20, etc: '기타');
+  print(mem2.toString());
+  Member mem3 = Member(id: 'kim3', name: '김삼국', age: 30);
+  print(mem3.toString());
+  Student student2 = Student(
+    id: mem2.id,
+    name: mem2.name,
+    age: mem2.age,
+    etc: mem2.etc,
+    studentNo: '20260001',
+  );
+  print(student2.toString());
   int myAge; // 변수명은 카멜표기법(소문자로시작, 2번째 단어 시작은 대문자로)
   myAge = 30; // 변수 모양이 낙타등 처럼 보여서 낙타등 표기법 이라고도 한다.
   print(myAge); // print는 Dart에 내장된 출력 함수 이다.
@@ -63,7 +116,9 @@ void main() { // 콘솔 앱 실행 진입점
   myJsonList[0].addAll({'etc': '기타'}); // 맵에 키:값 추가
   print(myJsonList);
   // Map 타입 변수 값 추출 (Read) - 키 사용 - 반복문을 배우면 인덱스 없이 특정 영역을 추출하는 방법을 배우게 됩니다.
-  print("${myJsonList[2]['id']}, ${myJsonList[2].keys}, ${myJsonList[2].values},${myJsonList[2].entries}");
+  print(
+    "${myJsonList[2]['id']}, ${myJsonList[2].keys}, ${myJsonList[2].values},${myJsonList[2].entries}",
+  );
   // toList() 함수를 사용하여 키를 List 배열 타입으로 추출 (아래)
   var myJsonKeys = myJsonList[2].keys;
   List<String> myJsonKeysList = myJsonKeys.toList();
