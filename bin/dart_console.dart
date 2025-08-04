@@ -6,7 +6,7 @@ void main(List<String> arguments) {
 /**
  * 변수와 함수 및 클래스를 사용하는 앱
  * 제작자 : 학생명
- */
+ *////
 class Student extends Member {
   String studentNo; //학번
   // Student 클래스의 생성자를 명명된 매개변수를 사용하도록 수정하고
